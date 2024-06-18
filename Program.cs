@@ -1,52 +1,12 @@
-﻿// Input in terminal
-// Event handler to listen input
-// Make class to process input
-
+﻿Cowsay cowsay = new Cowsay();
+cowsay.CowsayEvent += OnCowsayEvent;
 
 Console.Write("Tell me what you want to say: ");
 string? input = Console.ReadLine();
 
-Cowsay cowsay = new Cowsay();
-cowsay.say += onSay;
-cowsay.Cow(input);
+cowsay.InvokeCowsay(input);
 
-static void onSay() {
-    System.Console.WriteLine("Testing");
+static void OnCowsayEvent(object? sender, CowsayEventArgs e)
+{
+    Console.WriteLine(e.Output);
 }
-
-
-
-using System.Diagnostics;
-
-Console.Write("Enter a message:");
-string input = Console.ReadLine();
-
-ProcessStartInfo psi = new()
-{
-    FileName = "/bin/zsh",
-    Arguments = $"-c \"cowsay '{input}'\"",
-    RedirectStandardOutput = true,
-    RedirectStandardInput = true,
-    RedirectStandardError = true,
-    UseShellExecute = false,
-    CreateNoWindow = true
-};
-
-using Process process = new()
-{
-    StartInfo = psi
-};
-process.Start();
-
-string output = await process.StandardOutput.ReadToEndAsync();
-
-Console.WriteLine(output);
-
-string error = await process.StandardError.ReadToEndAsync();
-if (!string.IsNullOrEmpty(error))
-{
-    Console.WriteLine($"Error: {error}");
-}
-
-await process.WaitForExitAsync();
-

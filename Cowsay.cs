@@ -1,10 +1,12 @@
-public class Cowsay {
-    public event Action? say;
+using System.Diagnostics;
+public class Cowsay
+{
+    public event EventHandler<CowsayEventArgs>? CowsayEvent;
 
-    public void Cow(string word) {
-        if (word == "hello") {
-            say?.Invoke();
-        }
-        System.Console.WriteLine("no hello");
+    public void InvokeCowsay(string? input)
+    {
+        CowsayEventArgs cowsayEventArgs = new CowsayEventArgs();
+        cowsayEventArgs.Say(input);
+        CowsayEvent?.Invoke(this, cowsayEventArgs);
     }
 }
