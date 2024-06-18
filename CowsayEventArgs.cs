@@ -15,21 +15,19 @@ public class CowsayEventArgs : EventArgs
             CreateNoWindow = true
         };
 
-        using (Process process = new Process())
+        using Process process = new();
+        process.StartInfo = psi;
+        process.Start();
+        string output = process.StandardOutput.ReadToEnd();
+        Output = output;
+
+        string error = process.StandardError.ReadToEnd();
+
+        if (!string.IsNullOrEmpty(error))
         {
-            process.StartInfo = psi;
-            process.Start();
-            string output = process.StandardOutput.ReadToEnd();
-            Output = output;
-
-            string error = process.StandardError.ReadToEnd();
-
-            if (!string.IsNullOrEmpty(error))
-            {
-                Console.WriteLine($"Error: {error}");
-            }
-
-            process.WaitForExit();
+            Console.WriteLine($"Error: {error}");
         }
+
+        process.WaitForExit();
     }
 }
