@@ -26,7 +26,7 @@ public class CowsayEventArgs : EventArgs
 
             if (!string.IsNullOrEmpty(error))
             {
-                System.Console.WriteLine($"Error: {error}");
+                Console.WriteLine($"Error: {error}");
             }
 
             process.WaitForExit();
