@@ -3,7 +3,8 @@ public class CowsayEventArgs : EventArgs
 {
     public string? Output { get; set;}
 
-    public void Say(string? Input) {
+    public void Say(string? Input)
+    {
         ProcessStartInfo psi = new ProcessStartInfo
         {
             FileName = "/bin/zsh",
@@ -19,12 +20,13 @@ public class CowsayEventArgs : EventArgs
             process.StartInfo = psi;
             process.Start();
             string output = process.StandardOutput.ReadToEnd();
-            this.Output = output;
+            Output = output;
 
             string error = process.StandardError.ReadToEnd();
+
             if (!string.IsNullOrEmpty(error))
             {
-                Console.WriteLine($"Error: {error}");
+                System.Console.WriteLine($"Error: {error}");
             }
 
             process.WaitForExit();

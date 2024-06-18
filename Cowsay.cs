@@ -1,4 +1,3 @@
-using System.Diagnostics;
 public class Cowsay
 {
     public event EventHandler<CowsayEventArgs>? CowsayEvent;
